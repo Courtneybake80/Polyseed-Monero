@@ -16,7 +16,6 @@ from actions.api import action_api
 from actions.languages import action_languages
 from actions.encoding import action_encoding
 
-
 MENU_ITEMS = [
     ("1", "Install Dependencies", "pip install -r requirements.txt"),
     ("2", "Build", "Clone & build polyseed-monero (static/dynamic lib)"),
@@ -29,6 +28,16 @@ MENU_ITEMS = [
     ("0", "Exit", "Quit the application"),
 ]
 
+MENU_ACTIONS = {
+    "1": action_install_dependencies,
+    "2": action_build,
+    "3": action_features,
+    "4": action_languages,
+    "5": action_encoding,
+    "6": action_api,
+    "7": action_settings,
+    "8": action_about,
+}
 
 @ensure_env
 def main():
@@ -40,27 +49,12 @@ def main():
         if choice == "0":
             print_info("Goodbye!")
             sys.exit(0)
-        elif choice == "1":
-            action_install_dependencies()
-        elif choice == "2":
-            action_build()
-        elif choice == "3":
-            action_features()
-        elif choice == "4":
-            action_languages()
-        elif choice == "5":
-            action_encoding()
-        elif choice == "6":
-            action_api()
-        elif choice == "7":
-            action_settings()
-        elif choice == "8":
-            action_about()
+        elif choice in MENU_ACTIONS:
+            MENU_ACTIONS[choice]()
         else:
             print_error("Invalid choice. Enter 0-8.")
 
         input_pause()
-
 
 if __name__ == "__main__":
     main()
